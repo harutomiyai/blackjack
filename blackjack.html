@@ -17,8 +17,8 @@
     }
     .coin {
       position: relative;
-      width: 40px;
-      height: 40px;
+      width: 48px;
+      height: 48px;
       cursor: pointer;
     }
     .coin svg {
@@ -30,7 +30,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 0.75rem;
+      font-size: 0.875rem;
       font-weight: bold;
       color: white;
       pointer-events: none;
@@ -42,9 +42,26 @@
     .coin-100 svg path { fill: #a78bfa; }
   </style>
 </head>
-<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col items-center p-6">
+<body class="bg-gradient-to-br from-green-900 via-green-800 to-black text-white min-h-screen flex flex-col items-center p-6">
 
-  <h1 class="text-4xl font-bold text-yellow-400 mb-6">🃏 ブラックジャック</h1>
+  <h1 class="text-4xl font-bold text-yellow-400 mb-4">🃏 ブラックジャック</h1>
+
+  <div class="bg-black/50 rounded-lg p-4 w-full max-w-md mb-6">
+    <div class="flex justify-between items-center mb-2">
+      <p class="text-lg">💰 所持金: <span id="money" class="font-bold text-green-400">1000</span> 円</p>
+      <div class="flex items-center">
+        <label for="bet" class="mr-2">🎲 ベット:</label>
+        <input type="number" id="bet" value="100" min="1" max="1000" class="w-24 p-1 rounded bg-gray-700 text-white border border-gray-600" />
+      </div>
+    </div>
+    <div id="coin-select" class="flex gap-2 justify-end">
+      <div class="coin coin-1" data-value="1"><svg><use href="#coin"/></svg><span>1</span></div>
+      <div class="coin coin-5" data-value="5"><svg><use href="#coin"/></svg><span>5</span></div>
+      <div class="coin coin-10" data-value="10"><svg><use href="#coin"/></svg><span>10</span></div>
+      <div class="coin coin-50" data-value="50"><svg><use href="#coin"/></svg><span>50</span></div>
+      <div class="coin coin-100" data-value="100"><svg><use href="#coin"/></svg><span>100</span></div>
+    </div>
+  </div>
 
   <!-- 定義済みのコインSVG。use要素で再利用する -->
   <svg class="hidden">
@@ -53,20 +70,7 @@
     </symbol>
   </svg>
 
-  <div class="bg-gray-800 rounded-lg p-6 shadow-xl w-full max-w-md">
-    <div class="mb-4">
-      <p class="mb-2">💰 所持金: <span id="money" class="font-bold text-green-400">1000</span> 円</p>
-      <label for="bet" class="block mb-1">🎲 ベット額:</label>
-      <input type="number" id="bet" value="100" min="1" max="1000"
-             class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600" />
-      <div id="coin-select" class="flex gap-2 mt-2">
-        <div class="coin coin-1" data-value="1"><svg><use href="#coin"/></svg><span>1</span></div>
-        <div class="coin coin-5" data-value="5"><svg><use href="#coin"/></svg><span>5</span></div>
-        <div class="coin coin-10" data-value="10"><svg><use href="#coin"/></svg><span>10</span></div>
-        <div class="coin coin-50" data-value="50"><svg><use href="#coin"/></svg><span>50</span></div>
-        <div class="coin coin-100" data-value="100"><svg><use href="#coin"/></svg><span>100</span></div>
-      </div>
-    </div>
+  <div class="bg-gradient-to-b from-green-700 to-green-900 rounded-lg p-6 shadow-2xl w-full max-w-md">
 
     <div class="mb-6">
       <h2 class="text-xl font-semibold mb-1">あなたの手札</h2>
