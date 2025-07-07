@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at center, #135, #000);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+#status {
+  background: rgba(0,0,0,0.6);
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+#status label {
+  margin-right: 6px;
+}
+
+#status input[type="number"] {
+  width: 80px;
+  padding: 4px;
+}
+
+#coin-select {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.coin {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.coin svg {
+  width: 100%;
+  height: 100%;
+}
+
+.coin span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+  pointer-events: none;
+}
+
+.coin-1 svg path { fill: #f8fafc; }
+.coin-5 svg path { fill: #fde047; }
+.coin-10 svg path { fill: #fb923c; }
+.coin-50 svg path { fill: #60a5fa; }
+.coin-100 svg path { fill: #a78bfa; }
+
+#table {
+  background: linear-gradient(#075, #030);
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+section {
+  margin-bottom: 20px;
+}
+
+.card {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  width: 100px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+button.hit { background: #28a745; color: #fff; }
+button.stand { background: #ffc107; color: #000; }
+button.start { background: #007bff; color: #fff; }
+
+#result-message {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
