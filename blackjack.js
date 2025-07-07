@@ -38,7 +38,7 @@ function renderCards(elId, cards) {
     card.className = 'card inline-block rounded shadow';
     card.src = c.hidden ? 'img/back@2x.png' : c.img;
     card.alt = c.hidden ? 'back' : `${c.face}${c.suit}`;
-    card.style.width = '80px';
+    card.style.width = '100px';
     el.appendChild(card);
     requestAnimationFrame(() => card.classList.add('show'));
   }
