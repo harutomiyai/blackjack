@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>ブラックジャック - 完全版</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col items-center p-6">
+
+  <h1 class="text-4xl font-bold text-yellow-400 mb-6">🃏 ブラックジャック</h1>
+
+  <div class="bg-gray-800 rounded-lg p-6 shadow-xl w-full max-w-md">
+    <div class="mb-4">
+      <p class="mb-2">💰 所持金: <span id="money" class="font-bold text-green-400">1000</span> 円</p>
+      <label for="bet" class="block mb-1">🎲 ベット額:</label>
+      <input type="number" id="bet" value="100" min="10" max="1000"
+             class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600" />
+    </div>
+
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold mb-1">あなたの手札</h2>
+      <div id="player-cards" class="flex flex-wrap gap-2 mb-1"></div>
+      <p id="player-score" class="text-yellow-300"></p>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold mb-1">ディーラーの手札</h2>
+      <div id="dealer-cards" class="flex flex-wrap gap-2 mb-1"></div>
+      <p id="dealer-score" class="text-yellow-300"></p>
+    </div>
+
+    <p id="result-message" class="text-lg font-bold text-center text-pink-400 mb-4"></p>
+
+    <div class="flex justify-between">
+      <button onclick="hit()"
+              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition">
+        ヒット
+      </button>
+      <button onclick="stand()"
+              class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition">
+        スタンド
+      </button>
+      <button onclick="startGame()"
+              class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition">
+        ゲーム開始
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let playerCards = [];
+    let dealerCards = [];
+    let gameOver = false;
+    let money = 1000;
+
+    const suits = ['♠', '♥', '♦', '♣'];
+    const faces = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'];
+
+    function getCard() {
+      const suit = suits[Math.floor(Math.random() * suits.length)];
+      const face = faces[Math.floor(Math.random() * faces.length)];
+      const value = face === 'A' ? 11 : (['J', 'Q', 'K'].includes(face) ? 10 : face);
+      return { suit, face, value };
+    }
+
+    function calcScore(cards) {
+      let total = cards.reduce((sum, c) => sum + c.value, 0);
+      let aces = cards.filter(c => c.face === 'A').length;
+      while (total > 21 && aces--) total -= 10;
+      return total;
+    }
+
+    function renderCards(elId, cards) {
+      const el = document.getElementById(elId);
+      el.innerHTML = '';
+      for (const c of cards) {
+        const card = document.createElement('div');
+        card.className = "inline-block bg-white text-black font-mono px-4 py-2 rounded shadow border";
+        card.textContent = `${c.face}${c.suit}`;
+        el.appendChild(card);
+      }
+    }
+
+    function hit() {
+      if (gameOver) return;
+      playerCards.push(getCard());
+      updateUI();
+      if (calcScore(playerCards) > 21) endGame();
+    }
+
+    function stand() {
+      if (gameOver) return;
+      while (calcScore(dealerCards) < 17) {
+        dealerCards.push(getCard());
+      }
+      endGame();
+    }
+
+    function endGame() {
+      gameOver = true;
+      const ps = calcScore(playerCards);
+      const ds = calcScore(dealerCards);
+      const bet = parseInt(document.getElementById("bet").value);
+      let result = "";
+
+      if (ps > 21) result = "😢 バースト！負け。", money -= bet;
+      else if (ds > 21 || ps > ds) result = "🎉 あなたの勝ち！", money += bet;
+      else if (ps < ds) result = "😩 あなたの負け。", money -= bet;
+      else result = "🤝 引き分け。";
+
+      document.getElementById("result-message").textContent = result;
+      document.getElementById("money").textContent = money;
+      updateUI();
+    }
+
+    function startGame() {
+      if (money <= 0) {
+        alert("お金がありません！");
+        return;
+      }
+
+      playerCards = [getCard(), getCard()];
+      dealerCards = [getCard(), getCard()];
+      gameOver = false;
+      document.getElementById("result-message").textContent = "";
+      updateUI();
+    }
+
+    function updateUI() {
+      renderCards("player-cards", playerCards);
+      renderCards("dealer-cards", gameOver ? dealerCards : [dealerCards[0], { face: '?', suit: '', value: 0 }]);
+      document.getElementById("player-score").textContent = `得点: ${calcScore(playerCards)}`;
+      document.getElementById("dealer-score").textContent = gameOver ? `得点: ${calcScore(dealerCards)}` : '';
+    }
+
+    startGame();
+  </script>
+</body>
+</html>
