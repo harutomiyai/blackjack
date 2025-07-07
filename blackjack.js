@@ -95,4 +95,11 @@ function updateUI() {
   document.getElementById('dealer-score').textContent = gameOver ? `得点: ${calcScore(dealerCards)}` : '';
 }
 
-startGame();
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('#coin-select .coin').forEach(c => {
+    c.addEventListener('click', () => {
+      document.getElementById('bet').value = c.dataset.value;
+    });
+  });
+  startGame();
+});
