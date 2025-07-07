@@ -15,18 +15,57 @@
       opacity: 1;
       transform: translateY(0);
     }
+    .coin {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+    .coin svg {
+      width: 100%;
+      height: 100%;
+    }
+    .coin span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: white;
+      pointer-events: none;
+    }
+    .coin-1 svg path { fill: #f8fafc; }
+    .coin-5 svg path { fill: #fde047; }
+    .coin-10 svg path { fill: #fb923c; }
+    .coin-50 svg path { fill: #60a5fa; }
+    .coin-100 svg path { fill: #a78bfa; }
   </style>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col items-center p-6">
 
   <h1 class="text-4xl font-bold text-yellow-400 mb-6">🃏 ブラックジャック</h1>
 
+  <!-- 定義済みのコインSVG。use要素で再利用する -->
+  <svg class="hidden">
+    <symbol id="coin" viewBox="0 0 500 500">
+      <path d="M382.713,117.286c-73.177-73.178-192.245-73.177-265.425,0-73.178,73.178-73.178,192.247,0,265.425,61.315,61.315,154.841,71.259,226.603,29.823,13.884-8.017,26.96-17.96,38.823-29.823,73.178-73.178,73.178-192.247,0-265.425ZM293.39,88.067c27.561,7.335,53.605,21.785,75.181,43.361l-14.131,14.131c-19.027-19.027-41.954-31.773-66.207-38.247l5.157-19.245ZM166.116,104.783c12.846-7.417,26.474-12.986,40.495-16.717l5.157,19.246c-24.253,6.474-47.18,19.22-66.207,38.247l-14.131-14.131c10.603-10.603,22.277-19.481,34.686-26.645ZM82.316,249.999c0-14.863,1.932-29.427,5.656-43.416l19.342,5.183c-6.679,25.019-6.679,51.447,0,76.466l-19.342,5.183c-3.724-13.989-5.656-28.553-5.655-43.415ZM206.611,411.929c-27.561-7.335-53.605-21.784-75.181-43.36l14.131-14.131c19.027,19.027,41.954,31.773,66.207,38.247l-5.157,19.244ZM333.884,395.214c-12.846,7.416-26.475,12.985-40.495,16.716l-5.157-19.245c24.253-6.474,47.18-19.22,66.207-38.247l14.131,14.131c-10.603,10.603-22.277,19.482-34.686,26.645ZM340.187,340.186c-8.043,8.043-16.975,14.882-26.568,20.421-19.141,11.051-40.925,16.936-63.619,16.936-34.068,0-66.097-13.267-90.187-37.357-49.729-49.729-49.729-130.645,0-180.374,24.088-24.09,56.12-37.357,90.187-37.356,34.068,0,66.097,13.267,90.187,37.357,49.729,49.729,49.729,130.645,0,180.374ZM417.684,249.998c0,14.863-1.932,29.427-5.656,43.416l-19.342-5.183c6.679-25.019,6.679-51.447,0-76.466l19.342-5.183c3.724,13.989,5.656,28.553,5.655,43.415Z"/>
+    </symbol>
+  </svg>
+
   <div class="bg-gray-800 rounded-lg p-6 shadow-xl w-full max-w-md">
     <div class="mb-4">
       <p class="mb-2">💰 所持金: <span id="money" class="font-bold text-green-400">1000</span> 円</p>
       <label for="bet" class="block mb-1">🎲 ベット額:</label>
-      <input type="number" id="bet" value="100" min="10" max="1000"
+      <input type="number" id="bet" value="100" min="1" max="1000"
              class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600" />
+      <div id="coin-select" class="flex gap-2 mt-2">
+        <div class="coin coin-1" data-value="1"><svg><use href="#coin"/></svg><span>1</span></div>
+        <div class="coin coin-5" data-value="5"><svg><use href="#coin"/></svg><span>5</span></div>
+        <div class="coin coin-10" data-value="10"><svg><use href="#coin"/></svg><span>10</span></div>
+        <div class="coin coin-50" data-value="50"><svg><use href="#coin"/></svg><span>50</span></div>
+        <div class="coin coin-100" data-value="100"><svg><use href="#coin"/></svg><span>100</span></div>
+      </div>
     </div>
 
     <div class="mb-6">
