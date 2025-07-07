@@ -5,6 +5,17 @@
   <title>ブラックジャック - 完全版</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .card {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col items-center p-6">
 
@@ -76,9 +87,10 @@
       el.innerHTML = '';
       for (const c of cards) {
         const card = document.createElement('div');
-        card.className = "inline-block bg-white text-black font-mono px-4 py-2 rounded shadow border";
+        card.className = "card inline-block bg-white text-black font-mono px-4 py-2 rounded shadow border";
         card.textContent = `${c.face}${c.suit}`;
         el.appendChild(card);
+        requestAnimationFrame(() => card.classList.add('show'));
       }
     }
 
